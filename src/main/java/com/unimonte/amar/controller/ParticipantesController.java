@@ -2,12 +2,17 @@ package com.unimonte.amar.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,7 +38,7 @@ public class ParticipantesController {
 		return "participantes-list";//vai retorna a pagina com a lista de participantes
 		
 	}
-	
+		
 	@GetMapping("/showFormForAddParticipantes")//Vai chamar a pagina de formulario para inserir os dados dos participantes
 	public String showFormForAddParticipantes(Model theModel) {
 
@@ -47,10 +52,32 @@ public class ParticipantesController {
 
 	}
 	
-	@PostMapping("/saveParticipante")
-	public String saveParticipante(@ModelAttribute("participantes") Participantes theParticipantes) {
+	//aqui começa a initbinder
+	
+	@InitBinder//Pré processara todos os dados que chegarem no nosso controller
+	public void initBinder(WebDataBinder dataBinder) {
+		
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+		
+	}
+	
+	
+	
+	//@ModelAttribute("participantes") Participantes theParticipantes
+	@RequestMapping("/saveParticipante")
+	public String saveParticipante(@Valid @ModelAttribute("participantes") Participantes theParticipantes, BindingResult theBindingResult) {
 		
 		System.out.println("Entrou no metodo saveParticipante()");
+		
+		if (theBindingResult.hasErrors()) {//Vai verificar se há algum erro de validação caso haja algum erro
+			
+			System.out.println("Ocorreu um erro de validação");
+			
+			return "redirect:/participantes/showFormForAddParticipantes";//ele vai retornar para a pagina do formulario de novo
+			
+		}else {
 		
 		List<Participantes>participantes = repository.findAll();//Vai fazer uma lista percorrendo todos os participantes.
 			
@@ -73,6 +100,7 @@ public class ParticipantesController {
 
 		return "redirect:/participantes/list";//vai redirecionar para a pafgina que retorna uma lista
 
+		}
 	}
 	
 	@GetMapping("/delete")

@@ -87,9 +87,10 @@
 				<div class="form-group col-md-6">
 
 
-					<label>Matricula</label>
+					<label>Matricula(*)</label>
 					<form:input class="form-control" placeholder="51821583"
 						path="matricula" />
+					<form:errors path="matricula"/>	
 
 
 				</div>
@@ -100,6 +101,7 @@
 					<label>Email</label>
 					<form:input class="form-control" placeholder="f.lino1934@hotmail.com"
 						path="email" />
+					
 
 				</div>
 
@@ -109,6 +111,7 @@
 					<label>Idade</label>
 					<form:input class="form-control" placeholder="Somente numeros"
 						path="idade" />
+					<form:errors path="idade"/>	
 
 				</div>
 
@@ -124,9 +127,10 @@
 				<div class="form-group col-md-6">
 
 
-					<label>CPF</label>
+					<label>CPF(*)</label>
 					<form:input class="form-control" placeholder="493.669.018-08"
 						path="cpf" />
+					<form:errors path = "cpf"/>	
 
 				</div>
 

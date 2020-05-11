@@ -5,6 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "participantes")
@@ -21,26 +27,33 @@ public class Participantes {
 	@Column(name = "sobre_nome")
 	private String sobreNome;
 
+	@NotBlank(message = "Campo necessario")
+	@Size(min = 6, message = "Campo necessario ")
 	@Column(name = "matricula")
 	private String matricula;
 
 	@Column(name = "email")
+	@Email(message = "Formato incompativel")//Pode passar nulo porem nunca no formato errado
 	private String email;
 
+	@Min(value = 16,message = "A idade tem que ser maior ou igual a 16")
 	@Column(name = "idade")
-	private int idade;
+	@NotNull(message = "Campo obrigatório")
+	private Integer idade;
 
 	@Column(name = "curso")
 	private String curso;
 
 	@Column(name = "cpf")
+	@Pattern(regexp = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}",message = "Formato invalido")
+	@NotBlank(message = "Campo obrigatório")
 	private String cpf;
 
 	public Participantes() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Participantes(String nome, String sobreNome, String matricula, String email, int idade, String curso,
+	public Participantes(String nome, String sobreNome, String matricula, String email, Integer idade, String curso,
 			String cpf) {
 
 		this.nome = nome;
@@ -93,11 +106,11 @@ public class Participantes {
 		this.email = email;
 	}
 
-	public int getIdade() {
+	public Integer getIdade() {
 		return idade;
 	}
 
-	public void setIdade(int idade) {
+	public void setIdade(Integer idade) {
 		this.idade = idade;
 	}
 
@@ -147,7 +160,5 @@ public class Participantes {
 			return false;
 		return true;
 	}
-	
-	
 
 }
