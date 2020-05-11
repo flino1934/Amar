@@ -1,25 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Home Page Projeto A-mar</title>
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Participantes</title>
 </head>
 <body>
 
-	<header>
+<header>
 
 		<nav class="navbar navbar-expand-md navbar-light bg-primary">
 
 			<div class="container">
 
-				<h2>Inicio</h2>
+				<h2>Participantes</h2>
 				<button class="navbar-toggler" data-toggle="collapse"
 					data-target="#nav-principal">
 					<span class="navbar-toggler-icon"></span>
@@ -60,8 +62,47 @@
 
 	</header>
 
+		<table class="table table-hover table-bordered">
+		
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Nome</th>
+				<th scope="col">Sobrenome</th>
+				<th scope="col">Matricula</th>
+				<th scope="col">Email</th>
+				<th scope="col">Idade</th>
+				<th scope="col">CURSO</th>
+				<th scope="col">CPF</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		
+		<c:forEach var="tempParticipantes" items="${participantes}">
+		
+		
+			<c:url var="deleteLink" value="/participantes/delete">
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+				<c:param name="participanteId" value="${tempParticipantes.id}"></c:param>
+
+			</c:url>
+		
+		
+			<tr>
+				<td>${tempParticipantes.nome}</td>
+				<td>${tempParticipantes.sobreNome}</td>
+				<td>${tempParticipantes.matricula}</td>
+				<td>${tempParticipantes.email}</td>
+				<td>${tempParticipantes.idade}</td>
+				<td>${tempParticipantes.curso}</td>
+				<td>${tempParticipantes.cpf}</td>
+				<!-- Display the update link -->
+				<td><a href="${deleteLink}"
+					onclick="if(!(confirm('Deseja deletar o participante?'))) return false">Delete</a></td>
+			</tr>
+		
+		</c:forEach>
+		
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>
 	<script
@@ -72,6 +113,10 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
+	
+		
+</table>
+
 
 </body>
 </html>
