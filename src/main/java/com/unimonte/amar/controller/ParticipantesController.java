@@ -17,14 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.unimonte.amar.entities.Participantes;
-import com.unimonte.amar.repositories.ParticipantesRespository;
+import com.unimonte.amar.services.ParticipantesService;
 
 @Controller//Esta classe é um controller
 @RequestMapping("/participantes")
 public class ParticipantesController {
 
 	@Autowired
-	private ParticipantesRespository repository;//esta fazendo a injeção de dependecia de forma explicita
+	//private ParticipantesRespository repository;//esta fazendo a injeção de dependecia de forma explicita
+	
+	private ParticipantesService repository;
 	
 	@RequestMapping("/list")
 	public String listaParticipantes(Model theModel) {
@@ -51,20 +53,18 @@ public class ParticipantesController {
 		return "participantes-form";
 
 	}
-	
-	//aqui começa a initbinder
-	
-	@InitBinder//Pré processara todos os dados que chegarem no nosso controller
+		
+	@InitBinder//Pré processara todos os dados que chegarem no nosso controller pelo formulario
 	public void initBinder(WebDataBinder dataBinder) {
+		
+		System.out.println("Entrou no metodo initBlinder");
 		
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 		
 	}
-	
-	
-	
+		
 	//@ModelAttribute("participantes") Participantes theParticipantes
 	@RequestMapping("/saveParticipante")
 	public String saveParticipante(@Valid @ModelAttribute("participantes") Participantes theParticipantes, BindingResult theBindingResult) {

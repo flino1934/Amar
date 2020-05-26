@@ -9,28 +9,40 @@ import org.springframework.stereotype.Service;
 import com.unimonte.amar.entities.Participantes;
 import com.unimonte.amar.repositories.ParticipantesRespository;
 
-@Service//esta falando que essa classe é uma classe de serviço
+@Service // esta falando que essa classe é uma classe de serviço
 //nesta classe vai ficar toda a logica de serviço
 public class ParticipantesService {
 
 	@Autowired
-	private ParticipantesRespository repository;//Esta fazendo a injeção de dependecia do ParticipantesRespository de forma explicita.
-	
-	public List<Participantes>findAll(){
-		
-		return repository.findAll();//vai fazer uma lista e buscar todos os participantes.
-		
+	private ParticipantesRespository repository;// Esta fazendo a injeção de dependecia do ParticipantesRespository de
+												// forma explicita.
+
+	public List<Participantes> findAll() {
+
+		return repository.findAll();// vai fazer uma lista e buscar todos os participantes.
+
 	}
-	
+
 	public Participantes findById(Integer id) {
-		
-		repository.findById(id);//vai pesquisar pelo id 
-		
-		Optional<Participantes> obj = repository.findById(id);// vai adicionar ao valor o valor do id solicitado 
-		
-		return obj.get();//vai retornar o id solicitado
-		
+
+		repository.findById(id);// vai pesquisar pelo id
+
+		Optional<Participantes> obj = repository.findById(id);// vai adicionar ao valor o valor do id solicitado
+
+		return obj.get();// vai retornar o id solicitado
+
 	}
-	
-	
+
+	public void save(Participantes theParticipantes) {
+
+		repository.save(theParticipantes);
+
+	}// vai salvar o participante
+
+	public void deleteById(int theId) {
+
+		repository.deleteById(theId);
+
+	}// vai deletar o participante
+
 }
